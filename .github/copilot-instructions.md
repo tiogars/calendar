@@ -2,7 +2,17 @@
 
 ## Documentation Rule For New Features
 
-When implementing or changing a feature, update documentation using the numbered hierarchical structure in the docs folder.
+When implementing or changing a feature, update documentation using the
+numbered hierarchical structure in the docs folder.
+
+## Markdownlint Rule
+
+After editing Markdown files, run markdownlint and fix all reported warnings in
+repository-authored Markdown files.
+
+Recommended command:
+
+- `pnpm dlx markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"`
 
 ## Required Docs Structure
 

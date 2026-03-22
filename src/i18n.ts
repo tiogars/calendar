@@ -20,6 +20,8 @@ const resources = {
         languageLabel: 'Language',
         fields: {
           calendarTitle: 'Calendar Title',
+          freeText: 'Free Text',
+          freeTextPlaceholder: 'Add a short note or subtitle',
           fromDate: 'From (Month/Year)',
           toDate: 'To (Month/Year)',
         },
@@ -38,6 +40,7 @@ const resources = {
         },
         errors: {
           titleRequired: 'Title is required',
+          freeTextMaxLength: 'Free text must be {{max}} characters or less',
           fromDateRequired: 'From date is required',
           toDateRequired: 'To date is required',
         },
@@ -82,6 +85,8 @@ const resources = {
         languageLabel: 'Langue',
         fields: {
           calendarTitle: 'Titre du calendrier',
+          freeText: 'Texte libre',
+          freeTextPlaceholder: 'Ajoutez une note ou un sous-titre',
           fromDate: 'De (Mois/Annee)',
           toDate: 'A (Mois/Annee)',
         },
@@ -100,6 +105,7 @@ const resources = {
         },
         errors: {
           titleRequired: 'Le titre est obligatoire',
+          freeTextMaxLength: 'Le texte libre doit contenir au maximum {{max}} caracteres',
           fromDateRequired: 'La date de debut est obligatoire',
           toDateRequired: 'La date de fin est obligatoire',
         },

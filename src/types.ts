@@ -4,6 +4,7 @@ export type UiLanguage = 'en' | 'fr';
 
 export interface CalendarConfig {
   title: string;
+  freeText: string;
   fromDate: string; // YYYY-MM format
   toDate: string;   // YYYY-MM format
   orientation: Orientation;

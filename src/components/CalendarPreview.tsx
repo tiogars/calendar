@@ -33,7 +33,7 @@ function getMonths(fromDate: string, toDate: string): { year: number; month: num
 
 export default function CalendarPreview({ config, onEdit, language }: CalendarPreviewProps) {
   const { t } = useTranslation()
-  const { title, fromDate, toDate, orientation, gridLayout } = config
+  const { title, freeText, fromDate, toDate, orientation, gridLayout } = config
   const months = getMonths(fromDate, toDate)
 
   const cols = gridLayout === '4x3' ? 4 : 3
@@ -91,6 +91,17 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
         >
           {title}
         </Typography>
+
+        {freeText.trim() && (
+          <Typography
+            variant="body1"
+            align="center"
+            sx={{ mb: 2, whiteSpace: 'pre-line' }}
+            className="calendar-free-text"
+          >
+            {freeText}
+          </Typography>
+        )}
 
         {/* Month grid */}
         <Box

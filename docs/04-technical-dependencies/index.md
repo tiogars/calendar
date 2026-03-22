@@ -1,6 +1,7 @@
 # 04 - Technical Dependencies
 
-This document summarizes the runtime and development dependencies currently declared in `package.json`.
+This document summarizes the runtime and development dependencies currently
+declared in `package.json`.
 
 ## Runtime Dependencies
 
@@ -29,7 +30,8 @@ This document summarizes the runtime and development dependencies currently decl
   Development server and production bundling.
 - `typescript` and `@types/*` packages:
   Type-safe development and tooling support.
-- `eslint`, `@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `globals`:
+- `eslint`, `@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks`,
+  `eslint-plugin-react-refresh`, `globals`:
   Linting and code quality checks.
 - `@types/node`:
   Node.js type declarations for tooling/config files.

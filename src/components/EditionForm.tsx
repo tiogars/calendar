@@ -27,6 +27,8 @@ interface EditionFormProps {
   onLanguageChange: (language: UiLanguage) => void
 }
 
+const FREE_TEXT_MAX_LENGTH = 250
+
 export default function EditionForm({
   initialConfig,
   onPreview,
@@ -40,6 +42,7 @@ export default function EditionForm({
 
   const orientation = useWatch({ control, name: 'orientation' })
   const gridLayout = useWatch({ control, name: 'gridLayout' })
+  const freeText = useWatch({ control, name: 'freeText' }) ?? ''
 
   const onSubmit = (data: CalendarConfig) => {
     onPreview(data)
@@ -77,6 +80,30 @@ export default function EditionForm({
                   fullWidth
                   error={!!errors.title}
                   helperText={errors.title ? t('edition.errors.titleRequired') : undefined}
+                />
+              )}
+            />
+
+            <Controller
+              name="freeText"
+              control={control}
+              rules={{
+                maxLength: {
+                  value: FREE_TEXT_MAX_LENGTH,
+                  message: t('edition.errors.freeTextMaxLength', { max: FREE_TEXT_MAX_LENGTH }),
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label={t('edition.fields.freeText')}
+                  placeholder={t('edition.fields.freeTextPlaceholder')}
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  error={!!errors.freeText}
+                  helperText={errors.freeText?.message ?? `${freeText.length}/${FREE_TEXT_MAX_LENGTH}`}
+                  inputProps={{ maxLength: FREE_TEXT_MAX_LENGTH }}
                 />
               )}
             />
