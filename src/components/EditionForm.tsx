@@ -13,11 +13,16 @@ import {
   Paper,
   Select,
   MenuItem,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
   TextField,
   Typography,
   ToggleButton,
   ToggleButtonGroup,
   Stack,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
@@ -66,6 +71,8 @@ export default function EditionForm({
   onLanguageChange,
 }: Readonly<EditionFormProps>) {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const { control, getValues, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
     defaultValues: initialConfig,
   })
@@ -112,7 +119,7 @@ export default function EditionForm({
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
+    <Container maxWidth="sm" sx={{ py: 4, pb: isMobile ? 12 : 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom fontWeight="bold">
           {t('edition.title')}
@@ -379,6 +386,26 @@ export default function EditionForm({
           </DialogActions>
         </Dialog>
       </Paper>
+
+      {isMobile && (
+        <SpeedDial
+          ariaLabel={t('edition.actions.fabAriaLabel')}
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon />}
+          className="no-print"
+        >
+          <SpeedDialAction
+            icon={<ShareIcon />}
+            tooltipTitle={t('edition.actions.share')}
+            onClick={handleOpenShareDialog}
+          />
+          <SpeedDialAction
+            icon={<PreviewIcon />}
+            tooltipTitle={t('edition.actions.preview')}
+            onClick={handleSubmit(onSubmit)}
+          />
+        </SpeedDial>
+      )}
     </Container>
   )
 }

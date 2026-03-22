@@ -2,9 +2,13 @@ import { useState } from 'react'
 import {
   Box,
   Button,
+  Fab,
   Paper,
+  Tooltip,
   Typography,
   Stack,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import PrintIcon from '@mui/icons-material/Print'
 import EditIcon from '@mui/icons-material/Edit'
@@ -33,6 +37,8 @@ function getMonths(fromDate: string, toDate: string): { year: number; month: num
 
 export default function CalendarPreview({ config, onEdit, language }: CalendarPreviewProps) {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const {
     title,
     freeText,
@@ -168,6 +174,33 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
           </Typography>
         </Box>
       </Paper>
+
+      {isMobile && (
+        <>
+          <Tooltip title={t('preview.actions.backToEdit')} placement="right">
+            <Fab
+              color="default"
+              aria-label={t('preview.actions.backToEdit')}
+              onClick={onEdit}
+              sx={{ position: 'fixed', bottom: 16, left: 16 }}
+              className="no-print"
+            >
+              <EditIcon />
+            </Fab>
+          </Tooltip>
+          <Tooltip title={t('preview.actions.print')} placement="left">
+            <Fab
+              color="primary"
+              aria-label={t('preview.actions.print')}
+              onClick={handlePrint}
+              sx={{ position: 'fixed', bottom: 16, right: 16 }}
+              className="no-print"
+            >
+              <PrintIcon />
+            </Fab>
+          </Tooltip>
+        </>
+      )}
     </Box>
   )
 }
