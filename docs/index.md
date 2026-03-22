@@ -8,6 +8,7 @@ This folder contains the full project documentation in a numbered hierarchical s
 2. [Edition Modes](./02-edition-modes/index.md)
 3. [Pages and Screen Captures](./03-pages-and-screen-captures/index.md)
 4. [Technical Dependencies](./04-technical-dependencies/index.md)
+5. [CI/CD Deployment](./05-ci-cd-deployment/index.md)
 
 ## Scope
 
@@ -17,3 +18,4 @@ These documents describe:
 - How users move between edition and preview flows
 - Screen capture organization for key pages
 - Runtime and development dependencies used by the project
+- Automated CI/CD pipeline, GitHub Pages deployment, and release management

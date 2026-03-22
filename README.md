@@ -20,15 +20,28 @@ Vite, React, TypeScript, MUI Material, and MUI X Date Pickers.
 ## Setup
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ## Build
 
 ```bash
-npm run build
+pnpm build
 ```
+
+## Deployment
+
+This project is automatically deployed to GitHub Pages on every push to the
+`main` branch using GitHub Actions. The workflow also:
+
+- Validates code and documentation with linting
+- Manages semantic versioning automatically
+- Creates releases with versioned archives
+- Publishes built site to GitHub Pages
+
+For detailed deployment configuration and instructions, see
+[CI/CD Deployment](./docs/05-ci-cd-deployment/index.md).
 
 ## Documentation
 

@@ -1,0 +1,164 @@
+name: Build, Deploy & Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  PNPM_VERSION: 9.x
+
+jobs:
+  build:
+    name: Build & Lint
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      version-tag: ${{ steps.version.outputs.version-tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint Markdown
+        run: pnpm dlx markdownlint-cli2 "README.md" "docs/**/*.md" ".github/**/*.md"
+
+      - name: Lint code
+        run: pnpm lint
+
+      - name: Build site
+        run: pnpm build
+
+      - name: Determine version bump
+        id: version
+        run: |
+          # Read current version from VERSION file
+          CURRENT_VERSION=$(cat VERSION 2>/dev/null || echo "0.0.0")
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Parse version components
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "version-tag=v$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+          # Update VERSION file
+          echo "$NEW_VERSION" > VERSION
+          
+          # Update package.json version
+          pnpm pkg set version="$NEW_VERSION"
+
+      - name: Commit version bump
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add VERSION package.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}" || true
+
+      - name: Push version bump
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git push origin main || true
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: ./
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  release:
+    name: Create GitHub Release
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Create release archive
+        run: |
+          cd dist
+          zip -r ../calendar-${{ needs.build.outputs.version }}.zip .
+          cd ..
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.version-tag }}
+          name: Release ${{ needs.build.outputs.version }}
+          body: |
+            ## Calendar Release ${{ needs.build.outputs.version }}
+            
+            This release contains the built calendar application.
+            
+            ### Changes
+            - Automated build and deployment
+            - Version: ${{ needs.build.outputs.version }}
+            
+            ### Artifacts
+            - `calendar-${{ needs.build.outputs.version }}.zip` - Complete built site
+            
+            You can download and deploy the built site from the artifacts section.
+          files: calendar-${{ needs.build.outputs.version }}.zip
+          draft: false
+          prerelease: false
