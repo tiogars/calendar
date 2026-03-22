@@ -9,6 +9,14 @@ interface MonthCalendarProps {
   language: UiLanguage
 }
 
+function capitalizeFirstLetter(value: string): string {
+  if (!value) {
+    return value
+  }
+
+  return value.charAt(0).toUpperCase() + value.slice(1)
+}
+
 export default function MonthCalendar({ year, month, language }: MonthCalendarProps) {
   const { t } = useTranslation()
   const firstDay = dayjs(new Date(year, month, 1))
@@ -21,7 +29,7 @@ export default function MonthCalendar({ year, month, language }: MonthCalendarPr
   // Pad to complete last row
   while (cells.length % 7 !== 0) cells.push(null)
 
-  const monthName = firstDay.locale(language).format('MMMM YYYY')
+  const monthName = capitalizeFirstLetter(firstDay.locale(language).format('MMMM YYYY'))
   const dayNames = [
     t('calendar.dayNames.su'),
     t('calendar.dayNames.mo'),

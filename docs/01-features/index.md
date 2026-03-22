@@ -17,6 +17,7 @@ This document describes the main capabilities of the Calendar Print application.
 
 - Builds all months between the selected start and end month (inclusive)
 - Renders each month with weekday headers and date cells
+- Displays month names with an uppercase first letter in both English and French
 
 1. A4 print preview
 
