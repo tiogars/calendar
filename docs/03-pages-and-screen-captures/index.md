@@ -9,11 +9,7 @@ Description:
 - Presents the calendar settings form.
 - Used to define title, date range, orientation, and grid layout.
 
-Suggested capture file:
-
-- `docs/03-pages-and-screen-captures/01-screenshots/edition-page.png`
-
-Example image reference (after adding the screenshot):
+Screenshot (desktop, 1280 × 900):
 
 ![Edition Page](./01-screenshots/edition-page.png)
 
@@ -24,15 +20,24 @@ Description:
 - Shows an A4 preview with all generated months.
 - Includes actions to return to edition mode or print.
 
-Suggested capture file:
-
-- `docs/03-pages-and-screen-captures/01-screenshots/preview-page.png`
-
-Example image reference (after adding the screenshot):
+Screenshot (desktop, 1280 × 900):
 
 ![Preview Page](./01-screenshots/preview-page.png)
 
-## 3) Print Result (Optional)
+## 3) Mobile Views
+
+On small screens the layout adapts: a SpeedDial FAB replaces desktop action
+buttons, and the A4 preview is automatically scaled to fit the viewport width.
+
+### Mobile Edition Page (390 × 844)
+
+![Mobile Edition Page](./01-screenshots/mobile-edition-page.png)
+
+### Mobile Preview Page (390 × 844)
+
+![Mobile Preview Page](./01-screenshots/mobile-preview-page.png)
+
+## 4) Print Result (Optional)
 
 Description:
 
@@ -52,7 +57,8 @@ Example image reference (after adding the screenshot):
 1. Run the app in development mode.
 2. Open Edition Page and capture the full form.
 3. Switch to Preview Page and capture the full A4 preview area.
-4. Open print preview and capture the printable result (if your browser allows it).
+4. Resize to a mobile viewport (≤ 600 px wide) and repeat steps 2–3.
+5. Open print preview and capture the printable result (if your browser allows it).
 
 ## Screenshot Folder
 
