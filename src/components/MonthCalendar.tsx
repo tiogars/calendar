@@ -1,12 +1,13 @@
 import { Box, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { type UiLanguage } from '../types'
+import { type FirstDayOfWeek, type UiLanguage } from '../types'
 
 interface MonthCalendarProps {
   year: number
   month: number // 0-indexed
   language: UiLanguage
+  firstDayOfWeek: FirstDayOfWeek
 }
 
 function capitalizeFirstLetter(value: string): string {
@@ -17,11 +18,23 @@ function capitalizeFirstLetter(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
-export default function MonthCalendar({ year, month, language }: MonthCalendarProps) {
+function getLeadingEmptyCells(firstDayIndex: number, firstDayOfWeek: FirstDayOfWeek): number {
+  return firstDayOfWeek === 'monday' ? (firstDayIndex + 6) % 7 : firstDayIndex
+}
+
+function getOrderedDayNames(dayNames: string[], firstDayOfWeek: FirstDayOfWeek): string[] {
+  if (firstDayOfWeek === 'sunday') {
+    return dayNames
+  }
+
+  return [...dayNames.slice(1), dayNames[0]]
+}
+
+export default function MonthCalendar({ year, month, language, firstDayOfWeek }: MonthCalendarProps) {
   const { t } = useTranslation()
   const firstDay = dayjs(new Date(year, month, 1))
   const daysInMonth = firstDay.daysInMonth()
-  const startDayOfWeek = firstDay.day() // 0 = Sunday
+  const startDayOfWeek = getLeadingEmptyCells(firstDay.day(), firstDayOfWeek) // 0 = first displayed day
 
   const cells: (number | null)[] = []
   for (let i = 0; i < startDayOfWeek; i++) cells.push(null)
@@ -30,7 +43,7 @@ export default function MonthCalendar({ year, month, language }: MonthCalendarPr
   while (cells.length % 7 !== 0) cells.push(null)
 
   const monthName = capitalizeFirstLetter(firstDay.locale(language).format('MMMM YYYY'))
-  const dayNames = [
+  const dayNames = getOrderedDayNames([
     t('calendar.dayNames.su'),
     t('calendar.dayNames.mo'),
     t('calendar.dayNames.tu'),
@@ -38,7 +51,7 @@ export default function MonthCalendar({ year, month, language }: MonthCalendarPr
     t('calendar.dayNames.th'),
     t('calendar.dayNames.fr'),
     t('calendar.dayNames.sa'),
-  ]
+  ], firstDayOfWeek)
 
   return (
     <Box className="month-calendar">
@@ -75,7 +88,7 @@ export default function MonthCalendar({ year, month, language }: MonthCalendarPr
         ))}
         {cells.map((day, idx) => (
           <Box
-            key={idx}
+            key={`cell-${idx}-${day ?? 'empty'}`}
             sx={{
               textAlign: 'center',
               fontSize: '0.7rem',

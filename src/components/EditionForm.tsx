@@ -16,7 +16,13 @@ import {
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
-import { type CalendarConfig, type GridLayout, type Orientation, type UiLanguage } from '../types'
+import {
+  type CalendarConfig,
+  type FirstDayOfWeek,
+  type GridLayout,
+  type Orientation,
+  type UiLanguage,
+} from '../types'
 import PreviewIcon from '@mui/icons-material/Preview'
 import { useTranslation } from 'react-i18next'
 
@@ -55,6 +61,7 @@ export default function EditionForm({
 
   const orientation = useWatch({ control, name: 'orientation' })
   const gridLayout = useWatch({ control, name: 'gridLayout' })
+  const firstDayOfWeek = useWatch({ control, name: 'firstDayOfWeek' })
   const freeText = useWatch({ control, name: 'freeText' }) ?? ''
   const freeTextBelowCalendars = useWatch({ control, name: 'freeTextBelowCalendars' }) ?? ''
 
@@ -209,6 +216,21 @@ export default function EditionForm({
                 <ToggleButton value="3x4">{t('edition.gridLayout.option3x4')}</ToggleButton>
               </ToggleButtonGroup>
             </Box>
+
+            <FormControl fullWidth>
+              <InputLabel id="first-day-of-week-label">{t('edition.firstDayOfWeek.label')}</InputLabel>
+              <Select
+                labelId="first-day-of-week-label"
+                value={firstDayOfWeek}
+                label={t('edition.firstDayOfWeek.label')}
+                onChange={(event) => {
+                  setValue('firstDayOfWeek', event.target.value as FirstDayOfWeek)
+                }}
+              >
+                <MenuItem value="monday">{t('edition.firstDayOfWeek.monday')}</MenuItem>
+                <MenuItem value="sunday">{t('edition.firstDayOfWeek.sunday')}</MenuItem>
+              </Select>
+            </FormControl>
 
             <Controller
               name="freeTextBelowCalendars"

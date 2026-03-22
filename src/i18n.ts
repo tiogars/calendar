@@ -37,6 +37,11 @@ const resources = {
           option4x3: '4 columns x 3 rows',
           option3x4: '3 columns x 4 rows',
         },
+        firstDayOfWeek: {
+          label: 'First Day of Week',
+          monday: 'Monday',
+          sunday: 'Sunday',
+        },
         actions: {
           preview: 'Preview Calendar',
         },
@@ -103,6 +108,11 @@ const resources = {
           label: 'Disposition de la grille',
           option4x3: '4 colonnes x 3 lignes',
           option3x4: '3 colonnes x 4 lignes',
+        },
+        firstDayOfWeek: {
+          label: 'Premier jour de la semaine',
+          monday: 'Lundi',
+          sunday: 'Dimanche',
         },
         actions: {
           preview: 'Apercu du calendrier',

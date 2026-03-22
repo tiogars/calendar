@@ -43,6 +43,7 @@ function createDefaultConfig(language: UiLanguage): CalendarConfig {
     toDate: new Date().getFullYear() + '-12',
     orientation: 'landscape',
     gridLayout: '4x3',
+    firstDayOfWeek: 'monday',
   }
 }
 

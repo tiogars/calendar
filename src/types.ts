@@ -1,6 +1,7 @@
 export type Orientation = 'portrait' | 'landscape';
 export type GridLayout = '4x3' | '3x4';
 export type UiLanguage = 'en' | 'fr';
+export type FirstDayOfWeek = 'monday' | 'sunday';
 
 export interface CalendarConfig {
   title: string;
@@ -10,4 +11,5 @@ export interface CalendarConfig {
   toDate: string;   // YYYY-MM format
   orientation: Orientation;
   gridLayout: GridLayout;
+  firstDayOfWeek: FirstDayOfWeek;
 }

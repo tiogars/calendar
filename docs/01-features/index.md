@@ -12,6 +12,7 @@ This document describes the main capabilities of the Calendar Print application.
 - Select a month range using from/to month and year
 - Choose page orientation: portrait or landscape
 - Choose month grid layout: `4x3` or `3x4`
+- Choose the first day of the week: Monday or Sunday (default: Monday)
 
 1. Dynamic calendar generation
 
