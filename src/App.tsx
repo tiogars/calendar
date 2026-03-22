@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import EditionForm from './components/EditionForm'
 import CalendarPreview from './components/CalendarPreview'
 import { type CalendarConfig, type UiLanguage } from './types'
+import { parseShareState } from './shareLink'
 
 type Mode = 'edition' | 'preview'
 
@@ -50,9 +51,13 @@ function createDefaultConfig(language: UiLanguage): CalendarConfig {
 
 function App() {
   const { t, i18n } = useTranslation()
+  const defaultLanguage = detectBrowserLanguage()
+  const defaultConfig = createDefaultConfig(defaultLanguage)
+  const initialSharedState = parseShareState(globalThis.location.search, defaultLanguage, defaultConfig)
+
   const [mode, setMode] = useState<Mode>('edition')
-  const [language, setLanguage] = useState<UiLanguage>(detectBrowserLanguage)
-  const [config, setConfig] = useState<CalendarConfig>(() => createDefaultConfig(detectBrowserLanguage()))
+  const [language, setLanguage] = useState<UiLanguage>(initialSharedState.language)
+  const [config, setConfig] = useState<CalendarConfig>(initialSharedState.config)
 
   useEffect(() => {
     void i18n.changeLanguage(language)

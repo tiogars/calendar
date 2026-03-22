@@ -46,7 +46,20 @@ const resources = {
           sunday: 'Sunday',
         },
         actions: {
+          share: 'Share configuration',
           preview: 'Preview Calendar',
+        },
+        share: {
+          title: 'Share your calendar configuration',
+          description: 'Use this link to reopen the app with the same form values.',
+          close: 'Close share dialog',
+          cancel: 'Cancel',
+          copy: 'Copy link',
+          copySuccess: 'Link copied to clipboard.',
+          copyError: 'Copy failed. Please copy the link manually.',
+          sendEmail: 'Send by email',
+          emailSubject: 'Calendar configuration link',
+          emailBody: 'Open this link to load my calendar configuration:',
         },
         errors: {
           titleRequired: 'Title is required',
@@ -121,7 +134,20 @@ const resources = {
           sunday: 'Dimanche',
         },
         actions: {
+          share: 'Partager la configuration',
           preview: 'Apercu du calendrier',
+        },
+        share: {
+          title: 'Partager la configuration du calendrier',
+          description: 'Utilisez ce lien pour rouvrir l\'application avec les memes valeurs du formulaire.',
+          close: 'Fermer la boite de dialogue de partage',
+          cancel: 'Annuler',
+          copy: 'Copier le lien',
+          copySuccess: 'Lien copie dans le presse-papiers.',
+          copyError: 'La copie a echoue. Copiez le lien manuellement.',
+          sendEmail: 'Envoyer par e-mail',
+          emailSubject: 'Lien de configuration du calendrier',
+          emailBody: 'Ouvrez ce lien pour charger ma configuration du calendrier :',
         },
         errors: {
           titleRequired: 'Le titre est obligatoire',

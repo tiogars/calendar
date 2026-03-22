@@ -7,12 +7,14 @@ This document describes the main capabilities of the Calendar Print application.
 1. Calendar configuration form
 
 - Set a custom calendar title
-- Add optional free text displayed after the title (max 250 characters)
-- Add optional free text displayed below calendars (max 250 characters)
+- Add optional free text displayed after the title (max 400 characters)
+- Add optional free text displayed below calendars (max 400 characters)
 - Select a month range using from/to month and year
 - Choose page orientation: portrait or landscape
 - Choose month grid layout: `4x3` or `3x4`
 - Choose the first day of the week: Monday or Sunday (default: Monday)
+- Open a share dialog to generate a link that serializes the current form values
+- Copy the generated link to clipboard or open an email draft containing the link
 
 1. Dynamic calendar generation
 
@@ -47,6 +49,7 @@ This document describes the main capabilities of the Calendar Print application.
 ## Functional Notes
 
 - Date values are stored in `YYYY-MM` format.
+- Shared links serialize form values and language in a base64url query parameter.
 - Month generation is inclusive of both `fromDate` and `toDate`.
 - The app currently trusts user input order and does not block `fromDate > toDate`.
 - Free text fields are limited to 400 characters and show a live counter.

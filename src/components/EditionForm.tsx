@@ -3,8 +3,13 @@ import {
   Box,
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
   InputLabel,
+  IconButton,
   Paper,
   Select,
   MenuItem,
@@ -24,7 +29,13 @@ import {
   type UiLanguage,
 } from '../types'
 import PreviewIcon from '@mui/icons-material/Preview'
+import ShareIcon from '@mui/icons-material/Share'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import EmailIcon from '@mui/icons-material/Email'
+import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import { buildShareUrl } from '../shareLink'
 
 interface EditionFormProps {
   initialConfig: CalendarConfig
@@ -53,11 +64,14 @@ export default function EditionForm({
   onPreview,
   language,
   onLanguageChange,
-}: EditionFormProps) {
+}: Readonly<EditionFormProps>) {
   const { t } = useTranslation()
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
+  const { control, getValues, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
     defaultValues: initialConfig,
   })
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
+  const [shareUrl, setShareUrl] = useState('')
+  const [copyFeedback, setCopyFeedback] = useState<'idle' | 'success' | 'error'>('idle')
 
   const orientation = useWatch({ control, name: 'orientation' })
   const gridLayout = useWatch({ control, name: 'gridLayout' })
@@ -70,6 +84,31 @@ export default function EditionForm({
 
   const onSubmit = (data: CalendarConfig) => {
     onPreview(data)
+  }
+
+  const handleOpenShareDialog = () => {
+    setShareUrl(buildShareUrl(getValues(), language))
+    setCopyFeedback('idle')
+    setIsShareDialogOpen(true)
+  }
+
+  const handleCloseShareDialog = () => {
+    setIsShareDialogOpen(false)
+  }
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setCopyFeedback('success')
+    } catch {
+      setCopyFeedback('error')
+    }
+  }
+
+  const handleSendByEmail = () => {
+    const subject = t('edition.share.emailSubject')
+    const body = `${t('edition.share.emailBody')}\n\n${shareUrl}`
+    globalThis.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
   return (
@@ -127,8 +166,10 @@ export default function EditionForm({
                   minRows={3}
                   error={!!errors.freeText}
                   helperText={errors.freeText?.message ?? `${freeText.length}/${FREE_TEXT_MAX_LENGTH}`}
-                  FormHelperTextProps={errors.freeText ? undefined : { sx: { color: freeTextCounterColor } }}
-                  inputProps={{ maxLength: FREE_TEXT_MAX_LENGTH }}
+                  slotProps={{
+                    formHelperText: errors.freeText ? undefined : { sx: { color: freeTextCounterColor } },
+                    htmlInput: { maxLength: FREE_TEXT_MAX_LENGTH },
+                  }}
                 />
               )}
             />
@@ -251,15 +292,26 @@ export default function EditionForm({
                   minRows={3}
                   error={!!errors.freeTextBelowCalendars}
                   helperText={errors.freeTextBelowCalendars?.message ?? `${freeTextBelowCalendars.length}/${FREE_TEXT_MAX_LENGTH}`}
-                  FormHelperTextProps={
-                    errors.freeTextBelowCalendars
+                  slotProps={{
+                    formHelperText: errors.freeTextBelowCalendars
                       ? undefined
-                      : { sx: { color: freeTextBelowCalendarsCounterColor } }
-                  }
-                  inputProps={{ maxLength: FREE_TEXT_MAX_LENGTH }}
+                      : { sx: { color: freeTextBelowCalendarsCounterColor } },
+                    htmlInput: { maxLength: FREE_TEXT_MAX_LENGTH },
+                  }}
                 />
               )}
             />
+
+            <Button
+              type="button"
+              variant="outlined"
+              size="large"
+              startIcon={<ShareIcon />}
+              onClick={handleOpenShareDialog}
+              fullWidth
+            >
+              {t('edition.actions.share')}
+            </Button>
 
             <Button
               type="submit"
@@ -272,6 +324,60 @@ export default function EditionForm({
             </Button>
           </Stack>
         </form>
+
+        <Dialog
+          open={isShareDialogOpen}
+          onClose={handleCloseShareDialog}
+          fullWidth
+          maxWidth="sm"
+        >
+          <DialogTitle sx={{ pr: 6 }}>
+            {t('edition.share.title')}
+            <IconButton
+              aria-label={t('edition.share.close')}
+              onClick={handleCloseShareDialog}
+              sx={{ position: 'absolute', right: 12, top: 12 }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <Typography variant="body2" sx={{ mb: 2 }}>
+              {t('edition.share.description')}
+            </Typography>
+            <TextField
+              value={shareUrl}
+              fullWidth
+              multiline
+              minRows={3}
+              slotProps={{
+                input: {
+                  readOnly: true,
+                },
+              }}
+            />
+            {copyFeedback !== 'idle' && (
+              <Typography
+                variant="caption"
+                sx={{ mt: 1, display: 'block' }}
+                color={copyFeedback === 'success' ? 'success.main' : 'error.main'}
+              >
+                {copyFeedback === 'success'
+                  ? t('edition.share.copySuccess')
+                  : t('edition.share.copyError')}
+              </Typography>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ px: 3, pb: 3 }}>
+            <Button onClick={handleCloseShareDialog}>{t('edition.share.cancel')}</Button>
+            <Button onClick={handleCopyLink} startIcon={<ContentCopyIcon />}>
+              {t('edition.share.copy')}
+            </Button>
+            <Button onClick={handleSendByEmail} variant="contained" startIcon={<EmailIcon />}>
+              {t('edition.share.sendEmail')}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     </Container>
   )
