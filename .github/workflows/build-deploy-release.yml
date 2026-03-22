@@ -96,6 +96,7 @@ jobs:
           docker run \
             -v ${{ github.workspace }}/docs:/server/docs \
             -v ${{ github.workspace }}/mkdocs.yml:/server/mkdocs.yml \
+            -v ${{ github.workspace }}/pdf_event_hook:/server/pdf_event_hook \
             -v ${{ github.workspace }}/site_output:/server/site_output \
             -w /server/ \
             ghcr.io/tiogars/mkdocs-docker-image:latest \
