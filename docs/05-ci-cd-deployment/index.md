@@ -17,8 +17,10 @@ Runs initial checks and builds the application:
 4. Runs markdown linting: `pnpm dlx markdownlint-cli2`
 5. Runs code linting: `pnpm lint`
 6. Builds site: `pnpm build`
-7. Automatically bumps PATCH version
-8. Commits and pushes version changes to `main`
+7. Builds documentation with [`ghcr.io/tiogars/mkdocs-docker-image`](https://github.com/tiogars/mkdocs-docker-image)
+   into `site_output/`, then copies it to `dist/docs/`
+8. Automatically bumps PATCH version
+9. Commits and pushes version changes to `main`
 
 **Outputs**:
 
@@ -137,8 +139,18 @@ Next automated build will increment PATCH: `0.1.1`
 ### Deployment
 
 - Automatically deploys on every push to `main`
-- Site accessible after successful workflow completion
+- Application deployed to the GitHub Pages root URL
+- Documentation deployed to the `/docs/` subfolder of the same Pages site
 - Deployment URL shown in Actions workflow logs
+
+### Documentation URL
+
+The MkDocs documentation is accessible at `<pages-url>/docs/`
+(e.g., `https://tiogars.github.io/calendar/docs/`).
+
+It is built with the
+[`ghcr.io/tiogars/mkdocs-docker-image`](https://github.com/tiogars/mkdocs-docker-image)
+Docker image using the `mkdocs.yml` configuration at the root of the repository.
 
 ## GitHub Runner & Environment
 
