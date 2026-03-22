@@ -29,6 +29,7 @@ body {
     min-height: auto !important;
     display: block !important;
     position: relative;
+    transform: none !important;
   }
 
   .months-grid {

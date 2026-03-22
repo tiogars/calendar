@@ -26,6 +26,8 @@ This document describes the main capabilities of the Calendar Print application.
 
 - Displays the calendar in an A4-sized page container
 - Adjusts width and height based on selected orientation
+- On narrow screens the A4 page is automatically scaled down to fit the screen
+  width, giving an accurate preview of the print layout on mobile devices
 
 1. Printing workflow
 
