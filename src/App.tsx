@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Box, AppBar, IconButton, Link, Toolbar, Typography } from '@mui/material'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { enUS, frFR } from '@mui/x-date-pickers/locales'
@@ -72,6 +73,7 @@ function App() {
     setMode('edition')
   }
 
+  const docsUrl = 'https://calendar.tiogars.fr/docs/'
   const githubIssueUrl = 'https://github.com/tiogars/calendar/issues/new'
 
   return (
@@ -90,6 +92,17 @@ function App() {
             <Typography variant="body2" sx={{ opacity: 0.8 }}>
               {mode === 'edition' ? t('app.mode.edition') : t('app.mode.preview')}
             </Typography>
+            <IconButton
+              aria-label={t('app.actions.documentation')}
+              color="inherit"
+              component={Link}
+              href={docsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ ml: 1 }}
+            >
+              <MenuBookIcon />
+            </IconButton>
             <IconButton
               aria-label={t('app.actions.reportIssue')}
               color="inherit"

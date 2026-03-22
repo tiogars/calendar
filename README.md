@@ -45,8 +45,9 @@ For detailed deployment configuration and instructions, see
 
 ## Documentation
 
-- Full project documentation is available in the [docs](./docs/index.md)
-  folder.
+- Full project documentation is available online at
+  [https://calendar.tiogars.fr/docs/](https://calendar.tiogars.fr/docs/).
+- Local documentation source is in the [docs](./docs/index.md) folder.
 
 ## Tech Stack
 
