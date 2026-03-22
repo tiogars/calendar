@@ -38,6 +38,16 @@ This document describes the main capabilities of the Calendar Print application.
 - Users can switch from preview back to edition mode
 - Existing configuration is preserved for quick adjustments
 
+1. Mobile-friendly Floating Action Buttons (FAB)
+
+- On small screens (mobile), a SpeedDial FAB appears in the bottom-right corner
+  of the edition form, giving quick access to the **Preview Calendar** and
+  **Share configuration** actions without scrolling
+- On small screens in preview mode, two FABs are shown:
+  - Bottom-left: **Back to Edit** (grey)
+  - Bottom-right: **Print** (primary colour)
+- Existing desktop buttons are preserved for larger screens
+
 1. UI language behavior
 
 - Detects the browser language at startup (`en` or `fr`, with `en` fallback)

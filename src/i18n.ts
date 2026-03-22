@@ -49,6 +49,7 @@ const resources = {
         actions: {
           share: 'Share configuration',
           preview: 'Preview Calendar',
+          fabAriaLabel: 'Calendar actions',
         },
         share: {
           title: 'Share your calendar configuration',
@@ -138,6 +139,7 @@ const resources = {
         actions: {
           share: 'Partager la configuration',
           preview: 'Apercu du calendrier',
+          fabAriaLabel: 'Actions du calendrier',
         },
         share: {
           title: 'Partager la configuration du calendrier',
