@@ -1,4 +1,4 @@
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 import {
   Box,
   Button,
@@ -21,12 +21,12 @@ interface EditionFormProps {
 }
 
 export default function EditionForm({ initialConfig, onPreview }: EditionFormProps) {
-  const { control, handleSubmit, setValue, watch, formState: { errors } } = useForm<CalendarConfig>({
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
     defaultValues: initialConfig,
   })
 
-  const orientation = watch('orientation')
-  const gridLayout = watch('gridLayout')
+  const orientation = useWatch({ control, name: 'orientation' })
+  const gridLayout = useWatch({ control, name: 'gridLayout' })
 
   const onSubmit = (data: CalendarConfig) => {
     onPreview(data)
