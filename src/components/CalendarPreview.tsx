@@ -104,8 +104,7 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
         {freeText.trim() && (
           <Typography
             variant="body1"
-            align="center"
-            sx={{ mb: 2, whiteSpace: 'pre-line' }}
+            sx={{ mb: 2, whiteSpace: 'pre-line', textAlign: 'justify' }}
             className="calendar-free-text"
           >
             {freeText}
@@ -146,8 +145,7 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
         {freeTextBelowCalendars.trim() && (
           <Typography
             variant="body1"
-            align="center"
-            sx={{ mt: 2, whiteSpace: 'pre-line' }}
+            sx={{ mt: 2, whiteSpace: 'pre-line', textAlign: 'justify' }}
             className="calendar-free-text-below"
           >
             {freeTextBelowCalendars}

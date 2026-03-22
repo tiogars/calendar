@@ -33,7 +33,7 @@ interface EditionFormProps {
   onLanguageChange: (language: UiLanguage) => void
 }
 
-const FREE_TEXT_MAX_LENGTH = 250
+const FREE_TEXT_MAX_LENGTH = 400
 const FREE_TEXT_WARNING_THRESHOLD = 220
 
 function getCounterColor(length: number): 'error.main' | 'warning.main' | 'text.secondary' {

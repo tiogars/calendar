@@ -49,4 +49,4 @@ This document describes the main capabilities of the Calendar Print application.
 - Date values are stored in `YYYY-MM` format.
 - Month generation is inclusive of both `fromDate` and `toDate`.
 - The app currently trusts user input order and does not block `fromDate > toDate`.
-- Free text fields are limited to 250 characters and show a live counter.
+- Free text fields are limited to 400 characters and show a live counter.
