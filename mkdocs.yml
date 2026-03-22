@@ -1,0 +1,60 @@
+site_name: Calendar
+site_url: https://tiogars.github.io/calendar/docs/
+repo_name: tiogars/calendar
+repo_url: https://github.com/tiogars/calendar
+edit_uri: edit/main/docs/
+site_description: Documentation for the Calendar Print application
+site_author: Tiogars
+copyright: © 2025, Tiogars
+docs_dir: docs
+site_dir: site_output
+
+nav:
+  - Home: index.md
+  - Features: 01-features/index.md
+  - Edition Modes: 02-edition-modes/index.md
+  - Pages & Screenshots: 03-pages-and-screen-captures/index.md
+  - Technical Dependencies: 04-technical-dependencies/index.md
+  - CI/CD Deployment: 05-ci-cd-deployment/index.md
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.action.edit
+    - content.action.view
+  language: en
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true

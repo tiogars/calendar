@@ -28,14 +28,15 @@ The CI/CD pipeline consists of three main jobs:
 - Lints Markdown files according to project standards
 - Lints TypeScript code with ESLint
 - Builds the site with Vite
+- Builds documentation with `ghcr.io/tiogars/mkdocs-docker-image` into `dist/docs/`
 - Automatically bumps version (semantic versioning)
 - Commits and pushes version changes
 
 #### 2. Deploy (`deploy`)
 
-- Downloads the built application
+- Downloads the built application (including `docs/` subfolder)
 - Configures GitHub Pages
-- Deploys to GitHub Pages
+- Deploys to GitHub Pages (application at root, documentation at `/docs/`)
 - Returns the deployment URL
 
 #### 3. Release (`release`)
