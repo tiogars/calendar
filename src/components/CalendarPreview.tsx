@@ -1,0 +1,136 @@
+import { useState } from 'react'
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Stack,
+} from '@mui/material'
+import PrintIcon from '@mui/icons-material/Print'
+import EditIcon from '@mui/icons-material/Edit'
+import { type CalendarConfig } from '../types'
+import MonthCalendar from './MonthCalendar'
+import dayjs from 'dayjs'
+
+interface CalendarPreviewProps {
+  config: CalendarConfig
+  onEdit: () => void
+}
+
+function getMonths(fromDate: string, toDate: string): { year: number; month: number }[] {
+  const start = dayjs(fromDate + '-01')
+  const end = dayjs(toDate + '-01')
+  const months: { year: number; month: number }[] = []
+  let current = start
+  while (current.isBefore(end) || current.isSame(end, 'month')) {
+    months.push({ year: current.year(), month: current.month() })
+    current = current.add(1, 'month')
+  }
+  return months
+}
+
+export default function CalendarPreview({ config, onEdit }: CalendarPreviewProps) {
+  const { title, fromDate, toDate, orientation, gridLayout } = config
+  const months = getMonths(fromDate, toDate)
+
+  const cols = gridLayout === '4x3' ? 4 : 3
+  const rows = gridLayout === '4x3' ? 3 : 4
+
+  const [printDateTime, setPrintDateTime] = useState(new Date().toLocaleString())
+
+  const handlePrint = () => {
+    setPrintDateTime(new Date().toLocaleString())
+    window.print()
+  }
+
+  // A4 dimensions
+  const pageWidth = orientation === 'landscape' ? '297mm' : '210mm'
+  const pageHeight = orientation === 'landscape' ? '210mm' : '297mm'
+
+  return (
+    <Box>
+      {/* Action buttons - hidden on print */}
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ p: 2, justifyContent: 'center' }}
+        className="no-print"
+      >
+        <Button variant="outlined" startIcon={<EditIcon />} onClick={onEdit}>
+          Back to Edit
+        </Button>
+        <Button variant="contained" startIcon={<PrintIcon />} onClick={handlePrint}>
+          Print
+        </Button>
+      </Stack>
+
+      {/* Calendar page */}
+      <Paper
+        className={`calendar-page ${orientation}`}
+        elevation={3}
+        sx={{
+          width: pageWidth,
+          minHeight: pageHeight,
+          mx: 'auto',
+          p: 3,
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* Header */}
+        <Typography
+          variant="h4"
+          align="center"
+          fontWeight="bold"
+          gutterBottom
+          className="calendar-title"
+        >
+          {title}
+        </Typography>
+
+        {/* Month grid */}
+        <Box
+          className="months-grid"
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            gridTemplateRows: `repeat(${rows}, 1fr)`,
+            gap: 2,
+            flex: 1,
+          }}
+        >
+          {months.map(({ year, month }) => (
+            <Box
+              key={`${year}-${month}`}
+              sx={{
+                border: '1px solid #e0e0e0',
+                borderRadius: 1,
+                p: 1,
+                bgcolor: '#fafafa',
+              }}
+            >
+              <MonthCalendar year={year} month={month} />
+            </Box>
+          ))}
+        </Box>
+
+        {/* Print footer with datetime */}
+        <Box
+          className="print-footer"
+          sx={{
+            mt: 2,
+            pt: 1,
+            borderTop: '1px solid #ccc',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            Printed on: {printDateTime}
+          </Typography>
+        </Box>
+      </Paper>
+    </Box>
+  )
+}
