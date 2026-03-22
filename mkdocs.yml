@@ -19,6 +19,7 @@ nav:
 
 theme:
   name: material
+  custom_dir: docs/overrides
   icon:
     repo: fontawesome/brands/github
   features:
@@ -43,6 +44,30 @@ theme:
 
 plugins:
   - search
+  # https://pypi.org/project/mkdocs-with-pdf/
+  - to-pdf:
+      author: Tiogars
+      back_cover: false
+      copyright: Copyright © Tiogars 2025
+      cover: true
+      cover_subtitle: Documentation
+      cover_title: Calendar
+      output_path: tiogars.calendar.pdf
+      event_hook: pdf_event_hook
+  - print-site:
+      add_to_navigation: false
+      print_page_title: 'Print Site'
+      add_table_of_contents: true
+      toc_title: 'Table of Contents'
+      toc_depth: 6
+      add_full_urls: true
+      enumerate_headings: true
+      enumerate_figures: true
+      add_cover_page: true
+      path_to_pdf: "tiogars.calendar.pdf"
+      include_css: true
+      enabled: true
+      exclude: []
 
 markdown_extensions:
   - admonition
