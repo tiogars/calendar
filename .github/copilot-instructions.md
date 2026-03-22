@@ -94,6 +94,43 @@ Current screenshot location:
 
 - `docs/03-pages-and-screen-captures/01-screenshots/`
 
+### Viewport Sizes
+
+| Context | Width | Height |
+| ------- | ----- | ------ |
+| Desktop | 1280 px | 900 px |
+| Mobile | 390 px | 844 px |
+
+### Adding a Screenshot
+
+1. Run the app (`pnpm dev` or `pnpm preview`).
+2. Capture the page at the correct viewport using a browser or Playwright.
+3. Save the PNG file in `docs/03-pages-and-screen-captures/01-screenshots/`
+   using a descriptive lowercase name with hyphens (e.g. `my-new-page.png`).
+4. Add the filename and description to the table in
+   `docs/03-pages-and-screen-captures/01-screenshots/index.md`.
+5. Add an image reference in the relevant section of
+   `docs/03-pages-and-screen-captures/index.md`:
+   `![Alt text](./01-screenshots/my-new-page.png)`
+6. Run markdownlint and fix any warnings.
+
+### Updating a Screenshot
+
+1. Delete the old PNG file.
+2. Capture the updated UI at the same viewport size as the original.
+3. Save the new PNG with the **same filename** so all existing references
+   remain valid.
+4. Run markdownlint and fix any warnings.
+
+### Deleting a Screenshot
+
+1. Delete the PNG file from `docs/03-pages-and-screen-captures/01-screenshots/`.
+2. Remove its row from the table in
+   `docs/03-pages-and-screen-captures/01-screenshots/index.md`.
+3. Remove all `![…](./01-screenshots/deleted-file.png)` image references in
+   `docs/03-pages-and-screen-captures/index.md`.
+4. Run markdownlint and fix any warnings.
+
 ## Language Requirement
 
 Write documentation in English.
