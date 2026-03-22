@@ -25,6 +25,10 @@ npm run dev
 npm run build
 ```
 
+## Documentation
+
+- Full project documentation is available in the [docs](./docs/index.md) folder.
+
 ## Tech Stack
 
 - [Vite](https://vite.dev/) + [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
