@@ -30,7 +30,7 @@ This document describes the main capabilities of the Calendar Print application.
 6. UI language behavior
 - Detects the browser language at startup (`en` or `fr`, with `en` fallback)
 - Applies the active language to MUI date picker localization
-- Lets users change language from Edition Mode to update localized MUI labels
+- Lets users change language from Edition Mode to update translated app labels and calendar labels
 
 ## Functional Notes
 

@@ -8,7 +8,7 @@ Purpose: configure calendar content and layout.
 
 Main UI elements:
 
-- UI language selector (English/French)
+- UI language selector (English/Français)
 - Calendar title text field
 - From month/year picker
 - To month/year picker
@@ -19,7 +19,7 @@ Main UI elements:
 Behavior:
 
 - On app load, the initial UI language is detected from the browser language.
-- Users can change language in Edition Mode, and MUI picker labels update immediately.
+- Users can change language in Edition Mode, and form/preview labels plus MUI picker labels update immediately.
 - Form data is managed with React Hook Form.
 - Required field validation is applied to title and date fields.
 - Clicking Preview stores the current configuration and switches to Preview Mode.

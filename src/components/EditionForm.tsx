@@ -18,6 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
 import { type CalendarConfig, type GridLayout, type Orientation, type UiLanguage } from '../types'
 import PreviewIcon from '@mui/icons-material/Preview'
+import { useTranslation } from 'react-i18next'
 
 interface EditionFormProps {
   initialConfig: CalendarConfig
@@ -32,6 +33,7 @@ export default function EditionForm({
   language,
   onLanguageChange,
 }: EditionFormProps) {
+  const { t } = useTranslation()
   const { control, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
     defaultValues: initialConfig,
   })
@@ -47,34 +49,34 @@ export default function EditionForm({
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom fontWeight="bold">
-          Calendar Settings
+          {t('edition.title')}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={3}>
             <FormControl fullWidth>
-              <InputLabel id="app-language-label">Language</InputLabel>
+              <InputLabel id="app-language-label">{t('edition.languageLabel')}</InputLabel>
               <Select
                 labelId="app-language-label"
                 value={language}
-                label="Language"
+                label={t('edition.languageLabel')}
                 onChange={(event) => onLanguageChange(event.target.value as UiLanguage)}
               >
-                <MenuItem value="en">English</MenuItem>
-                <MenuItem value="fr">Francais</MenuItem>
+                <MenuItem value="en">{t('languages.english')}</MenuItem>
+                <MenuItem value="fr">{t('languages.french')}</MenuItem>
               </Select>
             </FormControl>
 
             <Controller
               name="title"
               control={control}
-              rules={{ required: 'Title is required' }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Calendar Title"
+                  label={t('edition.fields.calendarTitle')}
                   fullWidth
                   error={!!errors.title}
-                  helperText={errors.title?.message}
+                  helperText={errors.title ? t('edition.errors.titleRequired') : undefined}
                 />
               )}
             />
@@ -82,10 +84,10 @@ export default function EditionForm({
             <Controller
               name="fromDate"
               control={control}
-              rules={{ required: 'From date is required' }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <DatePicker
-                  label="From (Month/Year)"
+                  label={t('edition.fields.fromDate')}
                   views={['year', 'month']}
                   value={field.value ? dayjs(field.value + '-01') : null}
                   onChange={(val: Dayjs | null) => {
@@ -97,7 +99,7 @@ export default function EditionForm({
                     textField: {
                       fullWidth: true,
                       error: !!errors.fromDate,
-                      helperText: errors.fromDate?.message,
+                      helperText: errors.fromDate ? t('edition.errors.fromDateRequired') : undefined,
                     },
                   }}
                 />
@@ -107,10 +109,10 @@ export default function EditionForm({
             <Controller
               name="toDate"
               control={control}
-              rules={{ required: 'To date is required' }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <DatePicker
-                  label="To (Month/Year)"
+                  label={t('edition.fields.toDate')}
                   views={['year', 'month']}
                   value={field.value ? dayjs(field.value + '-01') : null}
                   onChange={(val: Dayjs | null) => {
@@ -122,7 +124,7 @@ export default function EditionForm({
                     textField: {
                       fullWidth: true,
                       error: !!errors.toDate,
-                      helperText: errors.toDate?.message,
+                      helperText: errors.toDate ? t('edition.errors.toDateRequired') : undefined,
                     },
                   }}
                 />
@@ -131,7 +133,7 @@ export default function EditionForm({
 
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Orientation
+                {t('edition.orientation.label')}
               </Typography>
               <ToggleButtonGroup
                 value={orientation}
@@ -141,14 +143,14 @@ export default function EditionForm({
                 }}
                 fullWidth
               >
-                <ToggleButton value="portrait">Portrait</ToggleButton>
-                <ToggleButton value="landscape">Landscape</ToggleButton>
+                <ToggleButton value="portrait">{t('edition.orientation.portrait')}</ToggleButton>
+                <ToggleButton value="landscape">{t('edition.orientation.landscape')}</ToggleButton>
               </ToggleButtonGroup>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" gutterBottom>
-                Grid Layout
+                {t('edition.gridLayout.label')}
               </Typography>
               <ToggleButtonGroup
                 value={gridLayout}
@@ -158,8 +160,8 @@ export default function EditionForm({
                 }}
                 fullWidth
               >
-                <ToggleButton value="4x3">4 columns × 3 rows</ToggleButton>
-                <ToggleButton value="3x4">3 columns × 4 rows</ToggleButton>
+                <ToggleButton value="4x3">{t('edition.gridLayout.option4x3')}</ToggleButton>
+                <ToggleButton value="3x4">{t('edition.gridLayout.option3x4')}</ToggleButton>
               </ToggleButtonGroup>
             </Box>
 
@@ -170,7 +172,7 @@ export default function EditionForm({
               startIcon={<PreviewIcon />}
               fullWidth
             >
-              Preview Calendar
+              {t('edition.actions.preview')}
             </Button>
           </Stack>
         </form>

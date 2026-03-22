@@ -16,6 +16,10 @@ This document summarizes the runtime and development dependencies currently decl
   Month/year picker components for date range selection.
 - `dayjs`:
   Date parsing and formatting used for month generation and display.
+- `i18next`:
+  Core internationalization engine used for runtime language resources.
+- `react-i18next`:
+  React bindings for translation hooks and UI re-render on language switch.
 - `react-hook-form`:
   Form state management and validation in Edition Mode.
 
@@ -44,5 +48,6 @@ This document summarizes the runtime and development dependencies currently decl
 ## Integration Notes
 
 - Date pickers are wrapped with `LocalizationProvider` and the Day.js adapter.
+- App text translations are handled by `i18next` and `react-i18next`.
 - Print behavior is controlled primarily by CSS `@media print` rules.
 - The current `@page` print size rule is set to A4 landscape in CSS.

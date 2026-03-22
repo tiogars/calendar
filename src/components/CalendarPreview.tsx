@@ -8,13 +8,15 @@ import {
 } from '@mui/material'
 import PrintIcon from '@mui/icons-material/Print'
 import EditIcon from '@mui/icons-material/Edit'
-import { type CalendarConfig } from '../types'
+import { useTranslation } from 'react-i18next'
+import { type CalendarConfig, type UiLanguage } from '../types'
 import MonthCalendar from './MonthCalendar'
 import dayjs from 'dayjs'
 
 interface CalendarPreviewProps {
   config: CalendarConfig
   onEdit: () => void
+  language: UiLanguage
 }
 
 function getMonths(fromDate: string, toDate: string): { year: number; month: number }[] {
@@ -29,7 +31,8 @@ function getMonths(fromDate: string, toDate: string): { year: number; month: num
   return months
 }
 
-export default function CalendarPreview({ config, onEdit }: CalendarPreviewProps) {
+export default function CalendarPreview({ config, onEdit, language }: CalendarPreviewProps) {
+  const { t } = useTranslation()
   const { title, fromDate, toDate, orientation, gridLayout } = config
   const months = getMonths(fromDate, toDate)
 
@@ -57,10 +60,10 @@ export default function CalendarPreview({ config, onEdit }: CalendarPreviewProps
         className="no-print"
       >
         <Button variant="outlined" startIcon={<EditIcon />} onClick={onEdit}>
-          Back to Edit
+          {t('preview.actions.backToEdit')}
         </Button>
         <Button variant="contained" startIcon={<PrintIcon />} onClick={handlePrint}>
-          Print
+          {t('preview.actions.print')}
         </Button>
       </Stack>
 
@@ -110,7 +113,7 @@ export default function CalendarPreview({ config, onEdit }: CalendarPreviewProps
                 bgcolor: '#fafafa',
               }}
             >
-              <MonthCalendar year={year} month={month} />
+              <MonthCalendar year={year} month={month} language={language} />
             </Box>
           ))}
         </Box>
@@ -127,7 +130,7 @@ export default function CalendarPreview({ config, onEdit }: CalendarPreviewProps
           }}
         >
           <Typography variant="caption" color="text.secondary">
-            Printed on: {printDateTime}
+            {t('preview.footer.printedOn')} {printDateTime}
           </Typography>
         </Box>
       </Paper>
