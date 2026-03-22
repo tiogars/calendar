@@ -10,6 +10,9 @@ const resources = {
           edition: 'Edition Mode',
           preview: 'Preview Mode',
         },
+        actions: {
+          reportIssue: 'Report an issue on GitHub',
+        },
       },
       languages: {
         english: 'English',
@@ -81,6 +84,9 @@ const resources = {
         mode: {
           edition: 'Mode Edition',
           preview: 'Mode Apercu',
+        },
+        actions: {
+          reportIssue: 'Signaler une issue sur GitHub',
         },
       },
       languages: {

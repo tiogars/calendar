@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Box, AppBar, Toolbar, Typography } from '@mui/material'
+import { Box, AppBar, IconButton, Link, Toolbar, Typography } from '@mui/material'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import GitHubIcon from '@mui/icons-material/GitHub'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { enUS, frFR } from '@mui/x-date-pickers/locales'
@@ -66,6 +67,8 @@ function App() {
     setMode('edition')
   }
 
+  const githubIssueUrl = 'https://github.com/tiogars/calendar/issues/new'
+
   return (
     <LocalizationProvider
       dateAdapter={AdapterDayjs}
@@ -82,6 +85,17 @@ function App() {
             <Typography variant="body2" sx={{ opacity: 0.8 }}>
               {mode === 'edition' ? t('app.mode.edition') : t('app.mode.preview')}
             </Typography>
+            <IconButton
+              aria-label={t('app.actions.reportIssue')}
+              color="inherit"
+              component={Link}
+              href={githubIssueUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ ml: 1 }}
+            >
+              <GitHubIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Box>

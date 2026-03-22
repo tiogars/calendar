@@ -42,6 +42,7 @@ This document describes the main capabilities of the Calendar Print application.
 - Applies the active language to MUI date picker localization
 - Lets users change language from Edition Mode to update translated app labels
   and calendar labels
+- Provides a header GitHub shortcut to open a new issue on the repository
 
 ## Functional Notes
 
