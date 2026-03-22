@@ -24,13 +24,33 @@ body {
   .calendar-page {
     box-shadow: none !important;
     margin: 0 !important;
-    padding: 10mm !important;
+    padding: 10mm 10mm 16mm !important;
     width: 100% !important;
-    min-height: 100vh !important;
+    min-height: auto !important;
+    display: block !important;
+    position: relative;
+  }
+
+  .months-grid {
+    flex: 0 1 auto !important;
+    grid-template-rows: none !important;
+    align-content: start !important;
+  }
+
+  .months-grid > * {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .print-footer {
     display: flex !important;
+    position: fixed;
+    left: 10mm;
+    right: 10mm;
+    bottom: 6mm;
+    margin: 0 !important;
+    background: #fff;
+    z-index: 10;
   }
 
   @page {
