@@ -12,6 +12,7 @@ const resources = {
         },
         actions: {
           reportIssue: 'Report an issue on GitHub',
+          documentation: 'Open documentation',
         },
       },
       languages: {
@@ -100,6 +101,7 @@ const resources = {
         },
         actions: {
           reportIssue: 'Signaler une issue sur GitHub',
+          documentation: 'Ouvrir la documentation',
         },
       },
       languages: {
