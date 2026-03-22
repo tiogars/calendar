@@ -8,6 +8,7 @@ This document describes the main capabilities of the Calendar Print application.
 
 - Set a custom calendar title
 - Add optional free text displayed after the title (max 250 characters)
+- Add optional free text displayed below calendars (max 250 characters)
 - Select a month range using from/to month and year
 - Choose page orientation: portrait or landscape
 - Choose month grid layout: `4x3` or `3x4`
@@ -45,4 +46,4 @@ This document describes the main capabilities of the Calendar Print application.
 - Date values are stored in `YYYY-MM` format.
 - Month generation is inclusive of both `fromDate` and `toDate`.
 - The app currently trusts user input order and does not block `fromDate > toDate`.
-- The free text field is limited to 250 characters and shows a live counter.
+- Free text fields are limited to 250 characters and show a live counter.

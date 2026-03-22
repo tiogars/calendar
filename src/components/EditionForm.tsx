@@ -30,6 +30,18 @@ interface EditionFormProps {
 const FREE_TEXT_MAX_LENGTH = 250
 const FREE_TEXT_WARNING_THRESHOLD = 220
 
+function getCounterColor(length: number): 'error.main' | 'warning.main' | 'text.secondary' {
+  if (length >= FREE_TEXT_MAX_LENGTH) {
+    return 'error.main'
+  }
+
+  if (length >= FREE_TEXT_WARNING_THRESHOLD) {
+    return 'warning.main'
+  }
+
+  return 'text.secondary'
+}
+
 export default function EditionForm({
   initialConfig,
   onPreview,
@@ -44,12 +56,10 @@ export default function EditionForm({
   const orientation = useWatch({ control, name: 'orientation' })
   const gridLayout = useWatch({ control, name: 'gridLayout' })
   const freeText = useWatch({ control, name: 'freeText' }) ?? ''
+  const freeTextBelowCalendars = useWatch({ control, name: 'freeTextBelowCalendars' }) ?? ''
 
-  const freeTextCounterColor = freeText.length >= FREE_TEXT_MAX_LENGTH
-    ? 'error.main'
-    : freeText.length >= FREE_TEXT_WARNING_THRESHOLD
-      ? 'warning.main'
-      : 'text.secondary'
+  const freeTextCounterColor = getCounterColor(freeText.length)
+  const freeTextBelowCalendarsCounterColor = getCounterColor(freeTextBelowCalendars.length)
 
   const onSubmit = (data: CalendarConfig) => {
     onPreview(data)
@@ -199,6 +209,35 @@ export default function EditionForm({
                 <ToggleButton value="3x4">{t('edition.gridLayout.option3x4')}</ToggleButton>
               </ToggleButtonGroup>
             </Box>
+
+            <Controller
+              name="freeTextBelowCalendars"
+              control={control}
+              rules={{
+                maxLength: {
+                  value: FREE_TEXT_MAX_LENGTH,
+                  message: t('edition.errors.freeTextMaxLength', { max: FREE_TEXT_MAX_LENGTH }),
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label={t('edition.fields.freeTextBelowCalendars')}
+                  placeholder={t('edition.fields.freeTextBelowCalendarsPlaceholder')}
+                  fullWidth
+                  multiline
+                  minRows={3}
+                  error={!!errors.freeTextBelowCalendars}
+                  helperText={errors.freeTextBelowCalendars?.message ?? `${freeTextBelowCalendars.length}/${FREE_TEXT_MAX_LENGTH}`}
+                  FormHelperTextProps={
+                    errors.freeTextBelowCalendars
+                      ? undefined
+                      : { sx: { color: freeTextBelowCalendarsCounterColor } }
+                  }
+                  inputProps={{ maxLength: FREE_TEXT_MAX_LENGTH }}
+                />
+              )}
+            />
 
             <Button
               type="submit"

@@ -38,6 +38,7 @@ function createDefaultConfig(language: UiLanguage): CalendarConfig {
   return {
     title: language === 'fr' ? 'Mon calendrier' : 'My Calendar',
     freeText: '',
+    freeTextBelowCalendars: '',
     fromDate: new Date().getFullYear() + '-01',
     toDate: new Date().getFullYear() + '-12',
     orientation: 'landscape',

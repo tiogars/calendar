@@ -8,6 +8,7 @@ Vite, React, TypeScript, MUI Material, and MUI X Date Pickers.
 - **Edition Mode**: Configure your calendar via a form:
   - Header title
   - Optional free text shown under the title in preview and print
+  - Optional free text shown below the calendars in preview and print
   - Date range (from/to month & year)
   - Orientation: Portrait or Landscape
   - Grid layout: 4 columns × 3 rows or 3 columns × 4 rows
