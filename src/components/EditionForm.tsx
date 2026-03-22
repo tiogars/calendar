@@ -28,6 +28,7 @@ interface EditionFormProps {
 }
 
 const FREE_TEXT_MAX_LENGTH = 250
+const FREE_TEXT_WARNING_THRESHOLD = 220
 
 export default function EditionForm({
   initialConfig,
@@ -43,6 +44,12 @@ export default function EditionForm({
   const orientation = useWatch({ control, name: 'orientation' })
   const gridLayout = useWatch({ control, name: 'gridLayout' })
   const freeText = useWatch({ control, name: 'freeText' }) ?? ''
+
+  const freeTextCounterColor = freeText.length >= FREE_TEXT_MAX_LENGTH
+    ? 'error.main'
+    : freeText.length >= FREE_TEXT_WARNING_THRESHOLD
+      ? 'warning.main'
+      : 'text.secondary'
 
   const onSubmit = (data: CalendarConfig) => {
     onPreview(data)
@@ -103,6 +110,7 @@ export default function EditionForm({
                   minRows={3}
                   error={!!errors.freeText}
                   helperText={errors.freeText?.message ?? `${freeText.length}/${FREE_TEXT_MAX_LENGTH}`}
+                  FormHelperTextProps={errors.freeText ? undefined : { sx: { color: freeTextCounterColor } }}
                   inputProps={{ maxLength: FREE_TEXT_MAX_LENGTH }}
                 />
               )}

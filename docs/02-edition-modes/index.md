@@ -24,6 +24,7 @@ Behavior:
   picker labels update immediately.
 - Form data is managed with React Hook Form.
 - Required field validation is applied to title and date fields.
+- The free text live counter turns orange from 220 characters and red at 250.
 - Clicking Preview stores the current configuration and switches to Preview Mode.
 
 ## 2) Preview Mode
