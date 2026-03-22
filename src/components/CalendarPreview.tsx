@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Box,
   Button,
@@ -65,6 +65,26 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
   const pageWidth = orientation === 'landscape' ? '297mm' : '210mm'
   const pageHeight = orientation === 'landscape' ? '210mm' : '297mm'
 
+  // A4 dimensions in pixels at 96 dpi (1 mm = 96 / 25.4 px)
+  const MM_TO_PX = 96 / 25.4
+  const pageWidthPx = Math.round((orientation === 'landscape' ? 297 : 210) * MM_TO_PX)
+  const pageHeightPx = Math.round((orientation === 'landscape' ? 210 : 297) * MM_TO_PX)
+
+  // Scale the preview page to fit the available screen width
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [previewScale, setPreviewScale] = useState(1)
+
+  useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0].contentRect.width
+      setPreviewScale(width < pageWidthPx ? width / pageWidthPx : 1)
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [pageWidthPx])
+
   return (
     <Box>
       {/* Action buttons - hidden on print */}
@@ -83,19 +103,26 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
       </Stack>
 
       {/* Calendar page */}
-      <Paper
-        className={`calendar-page ${orientation}`}
-        elevation={3}
-        sx={{
-          width: pageWidth,
-          minHeight: pageHeight,
-          mx: 'auto',
-          p: 3,
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <Box ref={wrapperRef} sx={{ width: '100%', overflow: 'hidden' }}>
+        <Paper
+          className={`calendar-page ${orientation}`}
+          elevation={3}
+          sx={{
+            width: pageWidth,
+            minHeight: pageHeight,
+            mx: previewScale < 1 ? 0 : 'auto',
+            p: 3,
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            ...(previewScale < 1 && {
+              transform: `scale(${previewScale})`,
+              transformOrigin: 'top left',
+              // Negative margin collapses the empty layout space left by transform: scale
+              mb: `${-(1 - previewScale) * pageHeightPx}px`,
+            }),
+          }}
+        >
         {/* Header */}
         <Typography
           variant="h4"
@@ -174,6 +201,7 @@ export default function CalendarPreview({ config, onEdit, language }: CalendarPr
           </Typography>
         </Box>
       </Paper>
+      </Box>
 
       {isMobile && (
         <>
