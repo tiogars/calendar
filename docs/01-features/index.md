@@ -27,6 +27,11 @@ This document describes the main capabilities of the Calendar Print application.
 - Users can switch from preview back to edition mode
 - Existing configuration is preserved for quick adjustments
 
+6. UI language behavior
+- Detects the browser language at startup (`en` or `fr`, with `en` fallback)
+- Applies the active language to MUI date picker localization
+- Lets users change language from Edition Mode to update localized MUI labels
+
 ## Functional Notes
 
 - Date values are stored in `YYYY-MM` format.

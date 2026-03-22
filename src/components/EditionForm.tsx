@@ -3,7 +3,11 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
+  InputLabel,
   Paper,
+  Select,
+  MenuItem,
   TextField,
   Typography,
   ToggleButton,
@@ -12,15 +16,22 @@ import {
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
-import { type CalendarConfig, type GridLayout, type Orientation } from '../types'
+import { type CalendarConfig, type GridLayout, type Orientation, type UiLanguage } from '../types'
 import PreviewIcon from '@mui/icons-material/Preview'
 
 interface EditionFormProps {
   initialConfig: CalendarConfig
   onPreview: (config: CalendarConfig) => void
+  language: UiLanguage
+  onLanguageChange: (language: UiLanguage) => void
 }
 
-export default function EditionForm({ initialConfig, onPreview }: EditionFormProps) {
+export default function EditionForm({
+  initialConfig,
+  onPreview,
+  language,
+  onLanguageChange,
+}: EditionFormProps) {
   const { control, handleSubmit, setValue, formState: { errors } } = useForm<CalendarConfig>({
     defaultValues: initialConfig,
   })
@@ -40,6 +51,19 @@ export default function EditionForm({ initialConfig, onPreview }: EditionFormPro
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={3}>
+            <FormControl fullWidth>
+              <InputLabel id="app-language-label">Language</InputLabel>
+              <Select
+                labelId="app-language-label"
+                value={language}
+                label="Language"
+                onChange={(event) => onLanguageChange(event.target.value as UiLanguage)}
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="fr">Francais</MenuItem>
+              </Select>
+            </FormControl>
+
             <Controller
               name="title"
               control={control}
