@@ -2,6 +2,8 @@
 
 This folder contains the full project documentation in a numbered hierarchical structure.
 
+![Calendar Print](./screenshots/screenshot.png)
+
 ## Table of Contents
 
 1. [Features](./01-features/index.md)
