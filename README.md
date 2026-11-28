@@ -3,6 +3,8 @@
 A web application for configuring and printing custom calendars, built with
 Vite, React, TypeScript, MUI Material, and MUI X Date Pickers.
 
+![Calendar Print](./docs/screenshots/screenshot.png)
+
 ## Features
 
 - **Edition Mode**: Configure your calendar via a form:
